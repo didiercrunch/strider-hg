@@ -1,0 +1,49 @@
+<label>
+  <span>Url</span>
+  <input required
+         type="text"
+         ng-model="config.url"
+         ng-pattern="/(git|http|https):\/\/.+?/"
+         placeholder="git://example.com/my/repo.git">
+</label>
+<div class="auth-type">
+  <h3>Auth type</h3>
+  <div class="btn-group">
+    <div class="btn" ng-model="config.auth.type" required btn-radio="'ssh'">SSH</div>
+    <div class="btn" ng-model="config.auth.type" required btn-radio="'http'">HTTP</div>
+    <div class="btn" ng-model="config.auth.type" required btn-radio="'https'">HTTPS</div>
+  </div>
+  <div ng-show="config.auth.type === 'ssh'">
+    <h4>Ssh Keys</h4>
+    <span class="help-text">
+      Leave these blank to use the project's private and public keys
+      (you can find those under the "General" tab).
+    </span>
+    <div class="row-fluid">
+      <div class="span6">
+        <label>Private Key</label>
+        <textarea ng-required="config.auth.type === 'ssh'" ng-model="config.auth.privkey"></textarea>
+      </div>
+      <div class="span6">
+        <label>Public Key</label>
+        <textarea ng-required="config.auth.type === 'ssh'" ng-model="config.auth.pubkey"></textarea>
+      </div>
+    </div>
+  </div>
+  <div ng-show="config.auth.type.indexOf('http') > -1">
+    <span class="help-text">Http(s) auth</span>
+    <label>
+      <input type="text"
+             ng-required="config.auth.type === 'https'"
+             ng-model="config.auth.username"
+             placeholder="Username">
+    </label>
+    <label>
+      <input type="password"
+             ng-required="config.auth.type === 'https'"
+             ng-model="config.auth.password"
+             placeholder="Password">
+    </label>
+  </div>
+</div>
+<!--button ng-click="save()" ng-disabled="saving">Save</button-->
